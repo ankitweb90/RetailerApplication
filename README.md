@@ -54,8 +54,8 @@
    Sample JSON Response - 
    
    {
-        "ankit": 150,
-        "sophie": 40
+        "David": 150,
+        "Sophie": 40
   }
 
  
