@@ -10,7 +10,11 @@ Git clone https://github.com/ankitweb90/RetailerApplication.git
 
 2. Run command : java -jar RetailerApplication-0.0.1-SNAPSHOT.jar 
 
-3. This will display user interface of Retail application through which you can interact with following features:
+3. Access the mentioned link on browser: 
+
+   http://localhost:8080/retail
+
+4. This will display user interface of Retail application through which you can interact with following features:
 
 i. Add a Transaction 
    
