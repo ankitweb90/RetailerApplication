@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>RetailApp</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<script src="/request.js"></script>
+	<script src="/getRequest.js"></script>
+	<script src="/getTransactionRequest.js"></script>
+</head>
+<body>
+
+
+<div id="postResultDiv" align="center"></div>
+
+<div class="container">
+  <h2>Retail Application</h2>
+  <p>Add a transaction with below details:</p>
+  
+  <form id="Transaction">
+    <div class="form-group">
+      <label for="customerName">Customer Name:</label>
+      <input type="text" class="form-control" id="customerName">
+    </div>
+    
+    <div class="form-group">
+      <label for="transactionAmount">Transaction Amount:</label>
+      <input type="text" class="form-control" id="transactionAmount">
+    </div>
+    
+    <div class="form-group">
+      <label for="transactionDate">Transaction Date:</label>
+      <p>format: yyyy-mm-dd</p>
+      <input type="text" class="form-control" id="transactionDate">
+    </div>
+	<button type="submit" class="btn btn-primary">Submit</button>
+	
+  </form>
+  <br /> 
+  <br />
+
+ <div class="col-sm-7" style="margin: 20px 0px 20px 0px">
+ 	<button id="rewardslist" type="button" class="btn btn-primary">Get reward points per customer</button>
+ 	<div id="getRewardListDiv" style="padding: 20px 10px 20px 50px">
+ 		<ul class="reward-list">
+
+ 		</ul>
+  </div>
+  </div>
+  
+   <div class="col-sm-7" style="margin: 20px 0px 20px 0px">
+ 	<button id="transactionlist" type="button" class="btn btn-primary">Get Transaction list</button>
+ 	<div id="getTransactionListDiv" style="padding: 20px 10px 20px 50px">
+ 		<ul class="transaction-list">
+
+ 		</ul>
+  </div>
+  </div>
+
+</body>
+</html>

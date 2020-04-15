@@ -1,6 +1,8 @@
 package com.retailer.service;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -26,11 +28,9 @@ public class retailService {
 
 		if(TransactionMap.containsKey(tx.getCustomerName())) {
 			Map<Date, BigDecimal> nestedMap = TransactionMap.get(tx.getCustomerName());
-			
 			nestedMap.put(tx.getTransactionDate(), tx.getTransactionAmount());
 			
-			TransactionMap.put(tx.getCustomerName(), nestedMap);
-			
+			TransactionMap.put(tx.getCustomerName(), nestedMap);	
 			
 			updateRewardMap(tx, rewardMap);
 			
