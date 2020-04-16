@@ -6,7 +6,9 @@ Execute below commands on Terminal-
 
 1. Clone the repository on your local machine and go to the downloaded directory - 
 
-Git clone https://github.com/ankitweb90/RetailerApplication.git
+- Git clone https://github.com/ankitweb90/RetailerApplication.git
+
+- cd RetailerApplication
 
 2. Run command : java -jar RetailerApplication-0.0.1-SNAPSHOT.jar 
 
