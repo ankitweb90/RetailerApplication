@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.util.*;
 
 
@@ -45,39 +46,41 @@ public class RetailController {
 	public static addStaticData addStaticData;
 	
 
-	static Map<String, Map<Date, BigDecimal>> TransactionMap = new HashMap<String, Map<Date, BigDecimal>>();
+	static Map<String, Map<String, BigDecimal>> TransactionMap = new HashMap<String, Map<String, BigDecimal>>();
 	static Map<String, Integer> rewardMap = new HashMap<String, Integer>();
 	
 	
 	//static data addition for demo
 	static {
 		
-		retailService rs = new retailService();
-		Transaction tx1 = new Transaction("David", new BigDecimal(140.39), new GregorianCalendar(2020, 00, 10).getTime());
-		rs.addTransaction(tx1, TransactionMap, rewardMap);
-		Transaction tx2 = new Transaction("David", new BigDecimal(100.00), new GregorianCalendar(2020, 00, 30).getTime());
-		rs.addTransaction(tx2, TransactionMap, rewardMap);
-		Transaction tx3 = new Transaction("David", new BigDecimal(60.10), new GregorianCalendar(2020, 01, 25).getTime());
-		rs.addTransaction(tx3, TransactionMap, rewardMap);
-		Transaction tx4 = new Transaction("David", new BigDecimal(30.00), new GregorianCalendar(2020, 02, 13).getTime());
-		rs.addTransaction(tx4, TransactionMap, rewardMap);
-		Transaction tx5 = new Transaction("Sam", new BigDecimal(120.19), new GregorianCalendar(2020, 00, 06).getTime());
-		rs.addTransaction(tx5, TransactionMap, rewardMap);
-		Transaction tx6 = new Transaction("Sam", new BigDecimal(70.00), new GregorianCalendar(2020, 02, 11).getTime());
-		rs.addTransaction(tx6, TransactionMap, rewardMap);
-		Transaction tx7 = new Transaction("Ankit", new BigDecimal(90.00), new GregorianCalendar(2020, 02, 31).getTime());
-		rs.addTransaction(tx7, TransactionMap, rewardMap);
-		Transaction tx8 = new Transaction("Ankit", new BigDecimal(130.00), new GregorianCalendar(2020, 01, 9).getTime());
-		rs.addTransaction(tx8, TransactionMap, rewardMap);
-		
+
+		try {
+			retailService rs = new retailService();
+			Transaction tx1 = new Transaction("David", new BigDecimal(140.39), "2020-01-01");
+			rs.addTransaction(tx1, TransactionMap, rewardMap);
+			Transaction tx2 = new Transaction("David", new BigDecimal(100.00), "2020-02-03");
+			rs.addTransaction(tx2, TransactionMap, rewardMap);
+			Transaction tx3 = new Transaction("David", new BigDecimal(60.10), "2020-01-25");
+			rs.addTransaction(tx3, TransactionMap, rewardMap);
+			Transaction tx4 = new Transaction("David", new BigDecimal(30.00), "2020-03-13");
+			rs.addTransaction(tx4, TransactionMap, rewardMap);
+			Transaction tx5 = new Transaction("Sam", new BigDecimal(120.19), "2020-01-06");
+			rs.addTransaction(tx5, TransactionMap, rewardMap);
+			Transaction tx6 = new Transaction("Sam", new BigDecimal(70.00), "2020-02-11");
+			rs.addTransaction(tx6, TransactionMap, rewardMap);
+			Transaction tx7 = new Transaction("Ankit", new BigDecimal(90.00), "2020-01-31");
+			rs.addTransaction(tx7, TransactionMap, rewardMap);
+			Transaction tx8 = new Transaction("Ankit", new BigDecimal(130.00), "2020-01-09");
+			rs.addTransaction(tx8, TransactionMap, rewardMap);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value = "/Transaction", method = RequestMethod.POST)
-	public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction Transaction) {
+	public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction Transaction) throws ParseException {
 		
 		retailService.addTransaction(Transaction, TransactionMap, rewardMap);
-		
-		//ServiceResponse<Transaction> response = new ServiceResponse<Transaction>("success", Transaction);
 		
 		return new ResponseEntity<Transaction>(Transaction, HttpStatus.OK);
 			
@@ -93,7 +96,7 @@ public class RetailController {
 	
 	
 	@RequestMapping(value = "/rewardslist", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	public List<SummaryTransaction> rewardsList() {
+	public List<SummaryTransaction> rewardsList() throws ParseException {
 		
 		
 		return retailService.getAllTransaction(TransactionMap, rewardMap);
@@ -101,7 +104,7 @@ public class RetailController {
 	}
 	
 	@RequestMapping(value = "/transactions", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	public Map<String, Map<Date, BigDecimal>> TransactionList() {
+	public Map<String, Map<String, BigDecimal>> TransactionList() {
 		
 		
 		return TransactionMap;

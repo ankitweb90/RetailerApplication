@@ -23,14 +23,14 @@ $(document).ready(
 			        	  
 			        	  $.each(result, function(i, Transaction){
 			        		
-			        		  var customerName = "Customer Name - " + i + "</br>";
-			        		  		//		+ ", totalRewards - " + SummaryTransaction.totalRewards + "</br>";
+			        		  var customerName =  "<b>" + "Customer Name - " + "</b>" + i + "</br>";
 			        		  
 			        		  		$("#getTransactionListDiv .transaction-list").append(customerName) 
 			        		  		
 			        		  		$.each(Transaction, function (i, val) {
 
-			        		  			var Transaction_Details = "Date : " + i + ", Transaction Amount - " + val + "</br>"
+			        		  			var Transaction_Details = "<b>" + "Date : " + "</b>" + i + ", " 
+			        		  			                          + "<b>" + " Transaction Amount - " + "</b>" + "$ " + val + "</br>"
 			        		
 			        		  			$("#getTransactionListDiv .transaction-list").append(Transaction_Details)
 			        		  			

@@ -9,7 +9,7 @@ $(document).ready(
 				ajaxGet();
 			});
 
-		
+
 			function ajaxGet() {
 
 			    $.ajax({
@@ -23,14 +23,14 @@ $(document).ready(
 			        	  
 			        	  $.each(result, function(i, SummaryTransaction){
 			        		
-			        		  var customer = "Customer Name - " + SummaryTransaction.customerName
-			        		  				+ ",   TotalRewards - " + SummaryTransaction.totalRewards + "</br>";
+			        		  var customer = "<b>" + "Customer Name - " + "</b>" + SummaryTransaction.customerName
+			        		  				  + "<b> </br>" + " TotalRewards - " + "</b>" + SummaryTransaction.totalRewards  + "</br>";
 			        		  
 			        		  		$("#getRewardListDiv .reward-list").append(customer) 
 			        		  		
 			        		  		$.each(SummaryTransaction.rewardsPerMonth, function (i, val) {
 
-			        		  			var Monthly_Rewards = "Month : " + i + ",   Points - " + val + "</br>"
+			        		  			var Monthly_Rewards = "<b>" + "Month : " + "</b>" + i + ", " + "<b>" + " Points - " + "</b>" + + val + "</br>"
 			        		
 			        		  			$("#getRewardListDiv .reward-list").append(Monthly_Rewards)
 			        		  			

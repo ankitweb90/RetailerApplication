@@ -7,9 +7,9 @@ public class Transaction {
 	
 	private String customerName;
 	private BigDecimal transactionAmount;
-	private Date transactionDate;
+	private String transactionDate;
 	
-	public Transaction(String customerName, BigDecimal transactionAmount, Date date) {
+	public Transaction(String customerName, BigDecimal transactionAmount, String date) {
 		super();
 		this.customerName = customerName;
 		this.transactionAmount = transactionAmount;
@@ -32,11 +32,11 @@ public class Transaction {
 		this.transactionAmount = transactionAmount;
 	}
 
-	public Date getTransactionDate() {
+	public String getTransactionDate() {
 		return transactionDate;
 	}
 
-	public void setTransactionDate(Date transactionDate) {
+	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
 	

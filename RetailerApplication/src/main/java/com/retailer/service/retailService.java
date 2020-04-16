@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.DateUtils;
 
 import com.retailer.attributes.SummaryTransaction;
 import com.retailer.attributes.Transaction;
@@ -24,11 +26,14 @@ import com.retailer.attributes.Transaction;
 @Service
 public class retailService {
 
-	public void addTransaction(Transaction tx, Map<String, Map<Date, BigDecimal>> TransactionMap, Map<String, Integer> rewardMap) {
-
+	public void addTransaction(Transaction tx, Map<String, Map<String, BigDecimal>> TransactionMap, Map<String, Integer> rewardMap) throws ParseException {
+		
 		if(TransactionMap.containsKey(tx.getCustomerName())) {
-			Map<Date, BigDecimal> nestedMap = TransactionMap.get(tx.getCustomerName());
-			nestedMap.put(tx.getTransactionDate(), tx.getTransactionAmount());
+			
+			String strDate = addTimeToDate(tx.getTransactionDate());
+			
+			Map<String, BigDecimal> nestedMap = TransactionMap.get(tx.getCustomerName());
+			nestedMap.put(strDate, tx.getTransactionAmount());
 			
 			TransactionMap.put(tx.getCustomerName(), nestedMap);	
 			
@@ -36,9 +41,11 @@ public class retailService {
 			
 		}
 		else {
+
+			String strDate = addTimeToDate(tx.getTransactionDate());
 			
-			Map<Date, BigDecimal> nestedMap = new HashMap<Date, BigDecimal>();
-			nestedMap.put(tx.getTransactionDate(), tx.getTransactionAmount());
+			Map<String, BigDecimal> nestedMap = new HashMap<String, BigDecimal>();
+			nestedMap.put(strDate, tx.getTransactionAmount());
 			
 			TransactionMap.put(tx.getCustomerName(), nestedMap);
 			
@@ -89,21 +96,21 @@ public class retailService {
 		return reward;
 	}
 
-	public List<SummaryTransaction> getAllTransaction(Map<String, Map<Date, BigDecimal>> TransactionMap,
-													Map<String, Integer> rewardMap) {
+	public List<SummaryTransaction> getAllTransaction(Map<String, Map<String, BigDecimal>> transactionMap,
+													Map<String, Integer> rewardMap) throws ParseException {
 	
 		
 		
 		List<SummaryTransaction>  List = new CopyOnWriteArrayList<SummaryTransaction>();
 		
-		for(Map.Entry<String, Map<Date, BigDecimal>> map : TransactionMap.entrySet()) {
+		for(Map.Entry<String, Map<String, BigDecimal>> map : transactionMap.entrySet()) {
 			SummaryTransaction summary = new SummaryTransaction();
 			summary.setCustomerName(map.getKey());
 		
 			List.add(summary);
 			
 		}
-		List<SummaryTransaction> finalList = getRewardsPerMonth(TransactionMap, List);
+		List<SummaryTransaction> finalList = getRewardsPerMonth(transactionMap, List);
 		
 		
 		
@@ -111,8 +118,8 @@ public class retailService {
 		return finalList;
 	}
 
-	private List<SummaryTransaction> getRewardsPerMonth(Map<String, Map<Date, BigDecimal>> TransactionMap,
-			List<SummaryTransaction> List) {
+	private List<SummaryTransaction> getRewardsPerMonth(Map<String, Map<String, BigDecimal>> TransactionMap,
+			List<SummaryTransaction> List) throws ParseException {
 	
 		List<SummaryTransaction> resultList = new ArrayList<SummaryTransaction>();
 		
@@ -121,12 +128,15 @@ public class retailService {
 			Map<String, Integer> txmap = new HashMap<>();
 			String customerName = tx.getCustomerName();
 			int totalRewardPoints=0;
-			Map<Date, BigDecimal> nestedMap = TransactionMap.get(customerName);
+			Map<String, BigDecimal> nestedMap = TransactionMap.get(customerName);
 			
-			for(Map.Entry<Date, BigDecimal> map : nestedMap.entrySet()) {
+			for(Map.Entry<String, BigDecimal> map : nestedMap.entrySet()) {
 				
-				Date date = map.getKey();
-				String month = new SimpleDateFormat("MMMM").format(date);
+				String date = map.getKey();
+				
+			    Date date1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);  
+				
+				String month = new SimpleDateFormat("MMMM").format(date1);
 				int rewardspoint = calculateRewardPoints(map.getValue());
 				
 				if(txmap.containsKey(month)) {
@@ -150,6 +160,20 @@ public class retailService {
 	
 	
 	
+	private String addTimeToDate(String dateString) throws ParseException {
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String timeString = df.format(new Date()).substring(10);
+		
+		dateString = dateString+" "+timeString;
+		Date startUserDate = df.parse(dateString);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
+		String strDate = dateFormat.format(startUserDate);  
+		
+		
+		return strDate;
+	}
 	
 	
 	

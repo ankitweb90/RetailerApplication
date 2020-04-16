@@ -1,6 +1,7 @@
 package com.retailer.attributes;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -24,12 +25,12 @@ class RetailerApplicationTests {
 	}
 	
 	@Test
-	void addTransaction() {
+	void addTransaction() throws ParseException {
 		
-		Map<String, Map<Date, BigDecimal>> TransactionMap = new HashMap<String, Map<Date, BigDecimal>>();
+		Map<String, Map<String, BigDecimal>> TransactionMap = new HashMap<String, Map<String, BigDecimal>>();
 		Map<String, Integer> rewardMap = new HashMap<String, Integer>();
 		
-		Transaction tx = new Transaction("ankit", new BigDecimal("80"), new GregorianCalendar(2019, 11, 10).getTime());
+		Transaction tx = new Transaction("ankit", new BigDecimal("80"),"2019-11-10");
 		
 		retailService.addTransaction(tx, TransactionMap, rewardMap);
 		
@@ -39,12 +40,12 @@ class RetailerApplicationTests {
 	}
 	
 	@Test
-	void addTransactionTransactionNull() {
+	void addTransactionTransactionNull() throws ParseException {
 		
-		Map<String, Map<Date, BigDecimal>> TransactionMap = new HashMap<String, Map<Date, BigDecimal>>();
+		Map<String, Map<String, BigDecimal>> TransactionMap = new HashMap<String, Map<String, BigDecimal>>();
 		Map<String, Integer> rewardMap = new HashMap<String, Integer>();
 		
-		Transaction tx = new Transaction("ankit", null, new GregorianCalendar(2019, 11, 10).getTime());
+		Transaction tx = new Transaction("ankit", null, "2019-11-10");
 		
 		retailService.addTransaction(tx, TransactionMap, rewardMap);
 		
@@ -54,12 +55,12 @@ class RetailerApplicationTests {
 	}
 	
 	@Test
-	void addTransactionTransactionBlank() {
+	void addTransactionTransactionBlank() throws ParseException {
 		
-		Map<String, Map<Date, BigDecimal>> TransactionMap = new HashMap<String, Map<Date, BigDecimal>>();
+		Map<String, Map<String, BigDecimal>> TransactionMap = new HashMap<String, Map<String, BigDecimal>>();
 		Map<String, Integer> rewardMap = new HashMap<String, Integer>();
 		
-		Transaction tx = new Transaction("ankit", new BigDecimal(""), new GregorianCalendar(2019, 11, 10).getTime());
+		Transaction tx = new Transaction("ankit", new BigDecimal(""), "2019-11-10");
 		
 		retailService.addTransaction(tx, TransactionMap, rewardMap);
 		
@@ -69,9 +70,9 @@ class RetailerApplicationTests {
 	}
 	
 	@Test
-	void addTransactionDateNull() {
+	void addTransactionDateNull() throws ParseException {
 		
-		Map<String, Map<Date, BigDecimal>> TransactionMap = new HashMap<String, Map<Date, BigDecimal>>();
+		Map<String, Map<String, BigDecimal>> TransactionMap = new HashMap<String, Map<String, BigDecimal>>();
 		Map<String, Integer> rewardMap = new HashMap<String, Integer>();
 		
 		Transaction tx = new Transaction("mehra", new BigDecimal("100"), null);
