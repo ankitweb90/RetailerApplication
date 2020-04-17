@@ -1,6 +1,6 @@
 # RetailerApplication
 
-Run Application:
+## Getting Started:
 
 Execute below commands on Terminal-
 
@@ -25,3 +25,8 @@ ii. Display Total transactions of each customer
 iii. Display monthwise reward points per customer
 
  
+## Application specs:
+
+This application is build as a standalone SpringBoot application with Apache Maven 3.6.3v build.
+
+
