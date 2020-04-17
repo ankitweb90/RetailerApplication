@@ -27,6 +27,6 @@ iii. Display monthwise reward points per customer
  
 ## Application specs:
 
-This application is build as a standalone SpringBoot application with Apache Maven 3.6.3v build.
+This application is build as a standalone SpringBoot application on JRE 11 with Apache Maven 3.6.3v for build.
 
 
