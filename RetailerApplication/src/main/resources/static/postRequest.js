@@ -27,9 +27,15 @@ $(document).ready(
 			          contentType: 'application/json',
 			          dataType : 'json',
 			          success: function(result) {
+			        
 			        	  	return alert("Transaction Successfull")
 
 			        	  console.log(result);
+			          },
+			          error : function(e){
+			
+			        	  return alert("Error!")
+			       
 			          }
 			    });
 				

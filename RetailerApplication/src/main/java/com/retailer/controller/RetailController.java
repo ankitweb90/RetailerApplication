@@ -30,7 +30,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.retailer.attributes.SummaryTransaction;
 import com.retailer.attributes.Transaction;
-import com.retailer.service.addStaticData;
 import com.retailer.service.retailService;
 
 
@@ -41,10 +40,6 @@ public class RetailController {
 	
 	@Autowired
 	public retailService retailService;
-	
-	@Autowired
-	public static addStaticData addStaticData;
-	
 
 	static Map<String, Map<String, BigDecimal>> TransactionMap = new HashMap<String, Map<String, BigDecimal>>();
 	static Map<String, Integer> rewardMap = new HashMap<String, Integer>();
@@ -77,12 +72,18 @@ public class RetailController {
 		}
 	}
 	
+	@SuppressWarnings("static-access")
 	@RequestMapping(value = "/Transaction", method = RequestMethod.POST)
 	public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction Transaction) throws ParseException {
 		
-		retailService.addTransaction(Transaction, TransactionMap, rewardMap);
 		
+		if(retailService.isValidFormat("yyyy-MM-dd", Transaction.getTransactionDate())) {
+		
+		retailService.addTransaction(Transaction, TransactionMap, rewardMap);
 		return new ResponseEntity<Transaction>(Transaction, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<Transaction>(Transaction, HttpStatus.BAD_REQUEST);
 			
 	}
 	
